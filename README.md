@@ -12,6 +12,12 @@ a WordPress plugin.
 There are technically two different types of installation: Installing the plugin in WordPress, and installing the plugin
 locally for development.
 
+### Requirements
+
+This plugin requires PHP ^7.2. It could potentially be adapted to work with 7.1, but would require changing some
+dependencies to deprecated versions. If you are using PHP 5.x or 7.0, it is recommended that you upgrade **immediately**
+as those versions are no longer being supported or patched.
+
 ### Installing in WordPress
 
 *coming soon (Once I have a functional build and a build pipeline setup)*
