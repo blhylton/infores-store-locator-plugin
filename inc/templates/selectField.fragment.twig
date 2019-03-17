@@ -1,7 +1,7 @@
 <select id="{{ id }}" name="{{ id }}">
-    <option selected="{{ value == '' }}">&mdash; Select a Post Type &mdash;</option>
+    <option {{ value == '' ? 'selected' }}>&mdash; Select a Post Type &mdash;</option>
     {% for option in options %}
-        <option value="{{ option.name }}" selected="{{ option.name in value ? 'true' : 'false' }}">
+        <option value="{{ option.name }}" {{ option.name == value ? 'selected' }}>
             {{ option.label }}
         </option>
     {% endfor %}

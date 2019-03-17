@@ -14,15 +14,20 @@ class WPAdmin extends AbstractUsesTwig
     public function init()
     {
         add_action('admin_menu', array($this, 'addConfigurationPage'));
-        add_action('admin_init', array($this, 'registerConfigurationSettings'));
 
         // Parameter settings
         add_action('admin_init', array($this, 'addParameterSettingsSection'));
+        add_action('admin_init', array($this, 'registerParameterSettings'));
         add_action('admin_init', array($this, 'addParameterFields'));
 
         // Post type settings
         add_action('admin_init', array($this, 'addPostTypeSettingsSection'));
+        add_action('admin_init', array($this, 'registerPostTypeSettings'));
         add_action('admin_init', array($this, 'addPostTypeFields'));
+
+        //Add metabox to associated post type
+        add_action('add_meta_boxes', array($this, 'addPostTypeMetaBox'));
+        add_action('save_post', array($this, 'savePostTypeMeta'));
     }
 
     public function addConfigurationPage()
@@ -31,16 +36,8 @@ class WPAdmin extends AbstractUsesTwig
             'InfoRes Store Locator Configuration',
             'InfoRes Store Locator Configuration',
             'manage_options',
-            'blhirsl-options',
-            array($this, 'renderOptionsPage')
-        );
-    }
-
-    public function registerConfigurationSettings()
-    {
-        register_setting(
             'blhirsl',
-            'blhirsl-configuration'
+            array($this, 'renderOptionsPage')
         );
     }
 
@@ -57,15 +54,64 @@ class WPAdmin extends AbstractUsesTwig
     public function addPostTypeSettingsSection()
     {
         add_settings_section(
-            'blhirsl-post-types',
+            'blhirsl-post-type',
             'Searchable Post Types',
             array($this, 'postTypeSettingsIntroText'),
             'blhirsl'
         );
     }
 
+    public function registerParameterSettings()
+    {
+        register_setting(
+            'blhirsl-parameters',
+            'blhirsl-base-uri'
+        );
+
+        register_setting(
+            'blhirsl-parameters',
+            'blhirsl-client-id'
+        );
+
+        register_setting(
+            'blhirsl-parameters',
+            'blhirsl-product-family-id'
+        );
+
+        register_setting(
+            'blhirsl-parameters',
+            'blhirsl-template'
+        );
+
+        register_setting(
+            'blhirsl-parameters',
+            'blhirsl-product-type'
+        );
+    }
+
+    public function registerPostTypeSettings()
+    {
+        register_setting(
+            'blhirsl-parameters',
+            'blhirsl-post-type-selector'
+        );
+    }
+
     public function addParameterFields()
     {
+        add_settings_field(
+            'blhirsl-base-uri',
+            'Base URI',
+            array($this, 'renderInputField'),
+            'blhirsl',
+            'blhirsl-parameters',
+            array(
+                'uid' => 'blhirsl-base-uri',
+                'type' => 'text',
+                'helper' => 'The Base URI of the page we\'re scraping'
+            )
+        );
+
         add_settings_field(
             'blhirsl-client-id',
             'Client ID',
@@ -124,13 +170,13 @@ class WPAdmin extends AbstractUsesTwig
         $postTypes = get_post_types(['public' => true], 'object');
 
         add_settings_field(
-            'blhirsl-post-type-selection',
+            'blhirsl-post-type-selector',
             'Post Types',
             array($this, 'renderSelectField'),
             'blhirsl',
-            'blhirsl-post-types',
+            'blhirsl-post-type',
             array(
-                'uid' => 'blhirsl-post-type-selection',
+                'uid' => 'blhirsl-post-type-selector',
                 'helper' => 'Post Types that will be searchable',
                 'supplemental' => 'Whichever post type you select here will have a text area added to their content ' .
                     'admin in order for you to associate an ID',
@@ -145,6 +191,24 @@ class WPAdmin extends AbstractUsesTwig
                 )
             )
         );
+    }
+
+    public function addPostTypeMetaBox()
+    {
+        $postType = get_option('blhirsl-post-type-selector');
+        if ($postType) {
+            add_meta_box(
+                'blhirsl-product-id-meta',
+                'InfoRes',
+                array($this, 'renderPostTypeBox'),
+                $postType,
+                'side',
+                'default',
+                array(
+                    'uid' => 'blhirsl-product-id-meta-value'
+                )
+            );
+        }
     }
 
     public function parameterSettingsIntroText()
@@ -195,7 +259,7 @@ class WPAdmin extends AbstractUsesTwig
     {
         // Since WordPress likes to echo everything, but we want to use Twig, we have to set up and pass in an output buffer
         ob_start();
-        settings_fields('blhirsl');
+        settings_fields('blhirsl-parameters');
         do_settings_sections('blhirsl');
         submit_button();
         $content = ob_get_clean();
@@ -203,5 +267,25 @@ class WPAdmin extends AbstractUsesTwig
         echo $this->render('optionsPage.fragment.twig', array(
             'content' => $content,
         ));
+    }
+
+    public function renderPostTypeBox($post, $args)
+    {
+        $value = get_post_meta($post->ID, $args['args']['uid'], true);
+        echo $this->render('productIdBox.fragment.twig', array(
+            'id' => $args['args']['uid'],
+            'value' => $value
+        ));
+    }
+
+    public function savePostTypeMeta($postId)
+    {
+        if (array_key_exists('blhirsl-product-id-meta-value', $_POST)) {
+            update_post_meta(
+                $postId,
+                'blhirsl-product-id-meta-value',
+                $_POST['blhirsl-product-id-meta-value']
+            );
+        }
     }
 }
