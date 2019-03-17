@@ -168,7 +168,7 @@ class DataParserTest extends TestCase
             $uriParams['productType'],
             $uriParams['zip'],
             $uriParams['productId'],
-            $uriParams['pageNum'],
+            $uriParams['pageNum']
         );
 
         $uri = $this->parser->getUrl();
