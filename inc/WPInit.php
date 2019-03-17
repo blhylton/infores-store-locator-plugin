@@ -16,8 +16,11 @@ class WPInit
         $admin = new WPAdmin();
         $admin->init();
 
-        $api = new WPAPI();
-        $api->init();
+        $parserAPI = new WPAPI_Parser();
+        $parserAPI->init();
+
+        $postAPI = new WPAPI_Posts();
+        $postAPI->init();
     }
 
 }

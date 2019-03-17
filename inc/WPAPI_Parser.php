@@ -1,17 +1,11 @@
 <?php
-/**
- * Created by PhpStorm.
- * User: Barry Hylton
- * Date: 3/17/2019
- * Time: 4:43 PM
- */
 
 namespace BLHylton\InfoResStoreLocator\WordPress;
 
 use BLHylton\InfoResStoreLocator\DataParser;
 use GuzzleHttp\Client;
 
-class WPAPI
+class WPAPI_Parser
 {
     private $globalRequestParameters;
 
@@ -56,7 +50,7 @@ class WPAPI
     public function run(\WP_REST_Request $request)
     {
         $params = $request->get_params();
-        $validation = $this->validateAPICall($params);
+        $validation = $this->validateAPICall();
         if ($validation !== null) {
             return $validation;
         }
@@ -65,7 +59,7 @@ class WPAPI
         return $this->getData($parser, $params);
     }
 
-    public function validateAPICall($params)
+    public function validateAPICall()
     {
         if (in_array(false, $this->globalRequestParameters)) {
             return new \WP_Error(
@@ -95,16 +89,20 @@ class WPAPI
 
     public function getData(DataParser $parser, $params)
     {
-        $html = $parser->getHTML(
-            $this->globalRequestParameters['clientID'],
-            $this->globalRequestParameters['productFamilyID'],
-            $this->globalRequestParameters['template'],
-            $this->globalRequestParameters['productType'],
-            $params['zipCode'],
-            $params['productId'],
-            $params['pageNum'],
-            $params['distance']
-        );
+        try {
+            $html = $parser->getHTML(
+                $this->globalRequestParameters['clientID'],
+                $this->globalRequestParameters['productFamilyID'],
+                $this->globalRequestParameters['template'],
+                $this->globalRequestParameters['productType'],
+                $params['zipCode'],
+                $params['productId'],
+                $params['pageNum'],
+                $params['distance']
+            );
+        } catch (\Exception $e) {
+            return new \WP_Error('http_fail', 'HTTP request to InfoRes failed');
+        }
 
         return $parser->parseDataFromHTML($html);
     }
