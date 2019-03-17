@@ -1,0 +1,98 @@
+[
+  {
+    "Store": "FOOD CITY",
+    "Address": "920 N STATE OF FRANKLIN RD JOHNSON CITY TN 37604",
+    "Phone": "(423) 928-2661",
+    "Distance": 1
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "2120 S ROAN ST JOHNSON CITY TN 37601",
+    "Phone": "(423) 928-0236",
+    "Distance": 2.6
+  },
+  {
+    "Store": "WALMART SUPERCENTER",
+    "Address": "3111 BROWNS MILL RD JOHNSON CITY TN 37604",
+    "Phone": "(423) 282-5376",
+    "Distance": 3.4
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "500 FOREST DR JONESBOROUGH TN 37659",
+    "Phone": "(423) 753-3066",
+    "Distance": 4.5
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "4307 N ROAN ST JOHNSON CITY TN 37615",
+    "Phone": "(423) 854-9213",
+    "Distance": 4.8
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "6681 BRISTOL HWY PINEY FLATS TN 37686",
+    "Phone": "(423) 538-0174",
+    "Distance": 7.1
+  },
+  {
+    "Store": "WALMART SUPERCENTER",
+    "Address": "1001 OVER MOUNTAIN DR ELIZABETHTON TN 37643",
+    "Phone": "(423) 543-8133",
+    "Distance": 8
+  },
+  {
+    "Store": "INGLES MARKET",
+    "Address": "768 W ELK AVE ELIZABETHTON TN 37643",
+    "Phone": "(423) 547-9323",
+    "Distance": 8.4
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "125 JUDGE GRESHAM ROAD GRAY TN 37615",
+    "Phone": "(423) 467-0018",
+    "Distance": 8.8
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "920 BROAD ST ELIZABETHTON TN 37643",
+    "Phone": "(423) 547-9206",
+    "Distance": 10.1
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "1911 MORELAND DR KINGSPORT TN 37663",
+    "Phone": "(423) 239-9629",
+    "Distance": 14.1
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "1921 HWY 394 BLOUNTVILLE TN 37617",
+    "Phone": "(423) 323-7983",
+    "Distance": 15.1
+  },
+  {
+    "Store": "WALMART SUPERCENTER",
+    "Address": "3200 FT HENRY DR KINGSPORT TN 37664",
+    "Phone": "(423) 392-0600",
+    "Distance": 15.4
+  },
+  {
+    "Store": "WALMART SUPERCENTER",
+    "Address": "220 CENTURY BLVD BRISTOL TN 37620",
+    "Phone": "(423) 968-2777",
+    "Distance": 17.9
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "300 CLINCHFIELD ST KINGSPORT TN 37660",
+    "Phone": "(423) 246-0042",
+    "Distance": 19.4
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "1430 VOLUNTEER PKWY BRISTOL TN 37620",
+    "Phone": "(423) 968-2828",
+    "Distance": 19.4
+  }
+]

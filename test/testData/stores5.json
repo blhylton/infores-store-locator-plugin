@@ -1,0 +1,32 @@
+[
+  {
+    "Store": "FOOD CITY",
+    "Address": "920 N STATE OF FRANKLIN RD JOHNSON CITY TN 37604",
+    "Phone": "(423) 928-2661",
+    "Distance": 1
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "2120 S ROAN ST JOHNSON CITY TN 37601",
+    "Phone": "(423) 928-0236",
+    "Distance": 2.6
+  },
+  {
+    "Store": "WALMART SUPERCENTER",
+    "Address": "3111 BROWNS MILL RD JOHNSON CITY TN 37604",
+    "Phone": "(423) 282-5376",
+    "Distance": 3.4
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "500 FOREST DR JONESBOROUGH TN 37659",
+    "Phone": "(423) 753-3066",
+    "Distance": 4.5
+  },
+  {
+    "Store": "FOOD CITY",
+    "Address": "4307 N ROAN ST JOHNSON CITY TN 37615",
+    "Phone": "(423) 854-9213",
+    "Distance": 4.8
+  }
+]

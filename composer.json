@@ -1,0 +1,30 @@
+{
+  "name": "stellar_studios/philly_swirl_store_locator",
+  "description": "WordPress plugin that enables the store locator for Philly Swirl",
+  "minimum-stability": "stable",
+  "license": "MIT",
+  "authors": [
+    {
+      "name": "Barry Hylton",
+      "email": "bhylton@stellarstudios.com"
+    }
+  ],
+  "autoload": {
+    "psr-4": {
+      "BLHylton\\InfoResStoreLocator\\": "src"
+    }
+  },
+  "autoload-dev": {
+    "psr-4": {
+      "BLHylton\\InfoResStoreLocator\\Test\\": "test"
+    }
+  },
+  "require": {
+    "paquettg/php-html-parser": "^2.0",
+    "ext-curl": "*",
+    "guzzlehttp/guzzle": "6.3.3"
+  },
+  "require-dev": {
+    "phpunit/phpunit": "8.0.5"
+  }
+}
