@@ -8,6 +8,7 @@
 
 namespace BLHylton\InfoResStoreLocator\WordPress;
 
+use Twig\Extension\DebugExtension;
 use Twig\Loader\FilesystemLoader;
 use Twig\Environment;
 
@@ -21,8 +22,11 @@ Abstract class AbstractUsesTwig
 
         $loader = new FilesystemLoader($twigTemplateDirectory);
         $this->twig = new Environment($loader, [
+            'debug' => true,
             'cache' => $twigTemplateDirectory . DIRECTORY_SEPARATOR . 'cache'
         ]);
+
+        $this->twig->addExtension(new DebugExtension());
     }
 
     protected function render($template, $parameters)

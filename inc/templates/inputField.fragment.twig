@@ -1,0 +1,10 @@
+<!--suppress HtmlFormInputWithoutLabel -->
+<input id="{{ id }} value={{ value }}" name="{{ id }}" type="{{ type }}"/>
+
+{% if helper is defined and helper is not empty %}
+    <span class="helper">{{ helper }}</span>
+{% endif %}
+
+{% if supplemental is defined and supplemental is not empty %}
+    <p class="description">{{ supplemental }}</p>
+{% endif %}

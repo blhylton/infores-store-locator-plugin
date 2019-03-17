@@ -1,0 +1,17 @@
+<select id="{{ id }}" name="{{ id }}">
+    <option selected="{{ value == '' }}">&mdash; Select a Post Type &mdash;</option>
+    {% for option in options %}
+        <option value="{{ option.name }}" selected="{{ option.name in value ? 'true' : 'false' }}">
+            {{ option.label }}
+        </option>
+    {% endfor %}
+</select>
+
+{% if helper is defined and helper is not empty %}
+    <span class="helper">{{ helper }}</span>
+{% endif %}
+
+{% if supplemental is defined and supplemental is not empty %}
+    <p class="description">{{ supplemental }}</p>
+{% endif %}
+

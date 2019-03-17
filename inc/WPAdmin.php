@@ -15,8 +15,14 @@ class WPAdmin extends AbstractUsesTwig
     {
         add_action('admin_menu', array($this, 'addConfigurationPage'));
         add_action('admin_init', array($this, 'registerConfigurationSettings'));
+
+        // Parameter settings
         add_action('admin_init', array($this, 'addParameterSettingsSection'));
         add_action('admin_init', array($this, 'addParameterFields'));
+
+        // Post type settings
+        add_action('admin_init', array($this, 'addPostTypeSettingsSection'));
+        add_action('admin_init', array($this, 'addPostTypeFields'));
     }
 
     public function addConfigurationPage()
@@ -44,6 +50,16 @@ class WPAdmin extends AbstractUsesTwig
             'blhirsl-parameters',
             'Request Parameters',
             array($this, 'parameterSettingsIntroText'),
+            'blhirsl'
+        );
+    }
+
+    public function addPostTypeSettingsSection()
+    {
+        add_settings_section(
+            'blhirsl-post-types',
+            'Searchable Post Types',
+            array($this, 'postTypeSettingsIntroText'),
             'blhirsl'
         );
     }
@@ -103,10 +119,43 @@ class WPAdmin extends AbstractUsesTwig
         );
     }
 
+    public function addPostTypeFields()
+    {
+        $postTypes = get_post_types(['public' => true], 'object');
+
+        add_settings_field(
+            'blhirsl-post-type-selection',
+            'Post Types',
+            array($this, 'renderSelectField'),
+            'blhirsl',
+            'blhirsl-post-types',
+            array(
+                'uid' => 'blhirsl-post-type-selection',
+                'helper' => 'Post Types that will be searchable',
+                'supplemental' => 'Whichever post type you select here will have a text area added to their content ' .
+                    'admin in order for you to associate an ID',
+                'postTypes' => array_map(
+                    function ($type) {
+                        return (object)[
+                            "name" => $type->name,
+                            "label" => $type->labels->singular_name
+                        ];
+                    },
+                    $postTypes
+                )
+            )
+        );
+    }
+
     public function parameterSettingsIntroText()
     {
         echo 'These settings are specific to your InfoRes installation and can typically be found in the URL to your ' .
             'default store locator';
+    }
+
+    public function postTypeSettingsIntroText()
+    {
+        echo '';
     }
 
     public function renderInputField($args)
@@ -117,7 +166,7 @@ class WPAdmin extends AbstractUsesTwig
             $value = '';
         }
 
-        echo $this->render('inputField.fragment.twig.html', array(
+        echo $this->render('inputField.fragment.twig', array(
             'id' => $args['uid'],
             'value' => $value,
             'type' => $args['type'],
@@ -125,14 +174,34 @@ class WPAdmin extends AbstractUsesTwig
         ));
     }
 
+    public function renderSelectField($args)
+    {
+        $value = get_option($args['uid']);
+
+        if (!$value) {
+            $value = '';
+        }
+
+        echo $this->render('selectField.fragment.twig', array(
+            'id' => $args['uid'],
+            'value' => $value,
+            'helper' => $args['helper'],
+            'supplemental' => $args['supplemental'],
+            'options' => $args['postTypes']
+        ));
+    }
+
     public function renderOptionsPage()
     {
-        echo '<form action="options.php" method="post">
-    <h2>InfoRes Store Locator Configuration</h2>';
+        // Since WordPress likes to echo everything, but we want to use Twig, we have to set up and pass in an output buffer
+        ob_start();
         settings_fields('blhirsl');
         do_settings_sections('blhirsl');
         submit_button();
-        echo '</form>';
+        $content = ob_get_clean();
 
+        echo $this->render('optionsPage.fragment.twig', array(
+            'content' => $content,
+        ));
     }
 }
