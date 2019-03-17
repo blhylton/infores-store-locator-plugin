@@ -1,3 +1,5 @@
+[![Build Status](https://travis-ci.org/blhylton/infores-store-locator-plugin.svg?branch=master)](https://travis-ci.org/blhylton/infores-store-locator-plugin)
+
 # InfoRes Store Locator Scraper & Parser
 
 This project was born out of a need to get store/product location data from an InfoRes site for a client. With no 
