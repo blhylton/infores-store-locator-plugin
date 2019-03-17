@@ -21,9 +21,11 @@ class DataParserTest extends TestCase
     public function setUp(): void
     {
         $this->guzzleMockRequestContainer = [];
+
+        $htmlDoc = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'testData' . DIRECTORY_SEPARATOR . 'external5.html');
         $history = Middleware::history($this->guzzleMockRequestContainer);
         $mock = new MockHandler([
-            new Response(200)
+            new Response(200, [], $htmlDoc)
         ]);
 
         $stack = HandlerStack::create($mock);
@@ -57,7 +59,30 @@ class DataParserTest extends TestCase
             "&storespagenum=1");
     }
 
-    public function testGetHtml()
+    public function testGetHTML()
+    {
+        $uriParams = [
+            'clientId' => '173',
+            'productFamilyId' => 'JJSF',
+            'zip' => 37604,
+            'productId' => 5724304606,
+            'template' => 'keg_nl.xsl',
+            'productType' => 'upc'
+        ];
+        $html = $this->parser->getHTML(
+            $uriParams['clientId'],
+            $uriParams['productFamilyId'],
+            $uriParams['template'],
+            $uriParams['productType'],
+            $uriParams['zip'],
+            $uriParams['productId']
+        );
+
+        $htmlDoc = file_get_contents(__DIR__ . DIRECTORY_SEPARATOR . '..' . DIRECTORY_SEPARATOR . 'testData' . DIRECTORY_SEPARATOR . 'external5.html');
+        $this->assertEquals($htmlDoc, $html);
+    }
+
+    public function testGetHtmlURL()
     {
         $uriParams = [
             'clientId' => '173',
@@ -86,6 +111,7 @@ class DataParserTest extends TestCase
             "&producttype={$uriParams['productType']}" .
             "&searchradius=20" .
             "&storespagenum=1";
+
         $this->assertEquals($testUri, $uri);
     }
 
@@ -107,6 +133,7 @@ class DataParserTest extends TestCase
             $uriParams['productType'],
             $uriParams['zip'],
             $uriParams['productId'],
+            null,
             $uriParams['distance']
         );
 
@@ -120,6 +147,40 @@ class DataParserTest extends TestCase
             "&producttype={$uriParams['productType']}" .
             "&searchradius={$uriParams['distance']}" .
             "&storespagenum=1";
+        $this->assertEquals($testUri, $uri);
+    }
+
+    public function testGetHtmlWithPageNum()
+    {
+        $uriParams = [
+            'clientId' => '173',
+            'productFamilyId' => 'JJSF',
+            'zip' => 37604,
+            'productId' => 5724304606,
+            'template' => 'keg_nl.xsl',
+            'productType' => 'upc',
+            'pageNum' => 2
+        ];
+        $this->parser->getHTML(
+            $uriParams['clientId'],
+            $uriParams['productFamilyId'],
+            $uriParams['template'],
+            $uriParams['productType'],
+            $uriParams['zip'],
+            $uriParams['productId'],
+            $uriParams['pageNum'],
+        );
+
+        $uri = $this->parser->getUrl();
+        $testUri = "http://productlocator.infores.com/productlocator/servlet/ProductLocator" .
+            "?clientid={$uriParams['clientId']}" .
+            "&productfamilyid={$uriParams['productFamilyId']}" .
+            "&zip={$uriParams['zip']}" .
+            "&productid={$uriParams['productId']}" .
+            "&template={$uriParams['template']}" .
+            "&producttype={$uriParams['productType']}" .
+            "&searchradius=20" .
+            "&storespagenum={$uriParams['pageNum']}";
         $this->assertEquals($testUri, $uri);
     }
 
@@ -142,8 +203,8 @@ class DataParserTest extends TestCase
             $uriParams['productType'],
             $uriParams['zip'],
             $uriParams['productId'],
-            $uriParams['distance'],
-            $uriParams['pageNumber']
+            $uriParams['pageNumber'],
+            $uriParams['distance']
         );
 
         $uri = $this->parser->getUrl();

@@ -61,12 +61,12 @@ class DataParser
      * @param string $productType Type of identifier to use
      * @param string $zipCode Zip Code to search from
      * @param string $productId Product Id to search for (with productType 'upc', this is the upc number)
-     * @param int $distance Distance in miles to search
+     * @param int $distance Distance in miles to search, defaults to 20 if left null
      * @param int|null $page Will default to page 1 if left null
      * @return \Psr\Http\Message\StreamInterface
      * @throws \GuzzleHttp\Exception\GuzzleException
      */
-    public function getHTML($clientId, $productFamilyId, $template, $productType, $zipCode, $productId, $distance = 20, $page = null)
+    public function getHTML($clientId, $productFamilyId, $template, $productType, $zipCode, $productId, $page = null, $distance = 20)
     {
         return $this->client->request('GET', '', [
             'query' => [
@@ -82,7 +82,7 @@ class DataParser
             'on_stats' => function (TransferStats $stats) {
                 $this->setUrl($stats->getEffectiveUri());
             }
-        ]);
+        ])->getBody()->getContents();
 
     }
 
