@@ -15,6 +15,9 @@ class WPInit
     {
         $admin = new WPAdmin();
         $admin->init();
+
+        $api = new WPAPI();
+        $api->init();
     }
 
 }
