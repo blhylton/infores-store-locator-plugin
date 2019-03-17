@@ -11,6 +11,8 @@ License: MIT
 */
 
 // If this file is called directly, abort.
+use BLHylton\InfoResStoreLocator\WordPress\WPInit;
+
 if (!defined('WPINC')) {
     die;
 }
@@ -21,3 +23,4 @@ if (!file_exists(__DIR__ . '/vendor/autoload.php')) {
 
 require_once __DIR__ . '/vendor/autoload.php';
 
+WPInit::init();
