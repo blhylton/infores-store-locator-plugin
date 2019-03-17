@@ -1,0 +1,19 @@
+language: php
+php:
+  - 7.1
+  - 7.2
+  - 7.3
+  - nightly
+branches:
+  only:
+    - master
+    - stable
+before_install:
+  - sudo apt update
+  - sudo apt install
+install:
+  - composer install
+env:
+matrix:
+  allow_failures:
+    - php: nightly
