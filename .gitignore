@@ -1,3 +1,5 @@
+build
+
 # Created by .ignore support plugin (hsz.mobi)
 ### Example user template template
 ### Example user template
@@ -100,3 +102,6 @@ $RECYCLE.BIN/
 
 # .nfs files are created when an open file is removed but is still being accessed
 .nfs*
+
+### PHPUnit
+.phpunit.result.cache
