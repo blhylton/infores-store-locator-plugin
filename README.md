@@ -20,8 +20,8 @@ as those versions are no longer being supported or patched.
 
 ### Installing in WordPress
 
-You can find zip files containing all the releases on [the release page](https://github.com/blhylton/infores-store-locator-plugin/releases).
-Download the zip file, and utilize the wordpress plugin screen to install from zip.
+You can find zip files containing all the releases in [the dist folder](https://github.com/blhylton/infores-store-locator-plugin/tree/master/dist)
+of the repo's master branch. Download the zip file, and utilize the wordpress plugin screen to install from zip.
 
 Once the plugin is installed and activated. There is a configuration screen under "Settings > InfoRes Store Locator Configuration"
 that has some parameters that are required to be set. All request parameters are from the URL that goes to a search 
