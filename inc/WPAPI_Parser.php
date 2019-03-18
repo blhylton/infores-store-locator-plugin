@@ -28,7 +28,7 @@ class WPAPI_Parser
     public function registerRoute()
     {
         register_rest_route('blhirsl/v1', '/get-stores', [
-            'methods' => 'POST',
+            'methods' => 'GET',
             'callback' => array($this, 'run'),
             'args' => [
                 'zipCode' => [
