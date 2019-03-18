@@ -11,15 +11,15 @@ branches:
 before_install:
   - sudo apt update
   - sudo apt install
-  - sudo apt install zip unzip
 install:
   - composer install
 env:
 matrix:
   allow_failures:
     - php: nightly
-script: "./vendor/bin/phpunit --configuration ./phpunit.xml".
+script: "./vendor/bin/phpunit --configuration ./phpunit.xml"
 before_deploy:
+  - sudo apt install zip unzip
   - rm -rf vendor
   - rm -rf test
   - rm -rf .git
