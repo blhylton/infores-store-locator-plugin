@@ -3,6 +3,9 @@ php:
   - 7.2
   - 7.3
   - nightly
+branches:
+  only:
+    - master
 before_install:
   - sudo apt update
   - sudo apt install
@@ -12,30 +15,4 @@ env:
 matrix:
   allow_failures:
     - php: nightly
-script: "./vendor/bin/phpunit --configuration ./phpunit.xml"
-before_deploy:
-  - sudo apt install zip unzip
-  - rm -rf vendor
-  - rm -rf test
-  - rm -rf .git
-  - rm .travis.yml
-  - rm .gitignore
-  - rm phpunit*
-  - rm .phpunit*
-  - rm README.md
-  - composer install --no-dev
-  - rm composer*
-  - cd ..
-  - sudo zip -r "release.zip" ./${REPO}
-  - sudo mkdir ${REPO}/build
-  - sudo mv release.zip ${REPO}/build/release.zip
-deploy:
-  provider: releases
-  api_key:
-    secure: MasxnPBGUbqFd0LBafp5bdjT4NGi09nb+Zic6S6w8v6BIfEi3IyQf80IIsQLSFS58/j4WBj8eZa1oHrOfcn02qs/Xs9izHg+3NZVvrZz4ah6tAxYjkBYyXiBlcpGm9OyB1DVkQL2V0J4RD+sXdyeatC4dNvP4Zu6aAyF3udTFDkZ7GCUlSoJM5jnJgtaucjY0ub5SDYmEKcp6H4AiN08dHIvcjZpgShhTT89htDoXttAWh6m86rtc7tXJ5JgUFsD0oB65iUK7CszdFuxJeUBK9poXY3BDVlnGU/EuYYbhSm79MoKMUYL71mx4T3br/n4UgEooGfZ5bg1pDXP4RVG1jbVOPagiPaZtrofLvt2s+afSAAtkDoTkVCk5uIoK3OzxRjuXFzHYRe2GAtB9mpOslFvYMNwtQBCNO99Y/0/8A0/pj7GCBxegWzEWvD2BS2JipbPiGRk8VL2ElfrpToOrcmSxta3rmjxBq18ikGhcbl2Ff3HQNRq7ASPB/+T/4K3YW7BfCc3fGtZXYiW6osJa1zIuCZPydkBSCHVjF6WtslxGczOBOQ8P8EfHy27P38b5Q/FrLmLGQCEQusgreckTrIFls53NIWGkwDr/XkGg0LQ2HYIJraiBfXJ3pAtGo5Q8D0Qh+M1yrsS5nMeuvkpyIPcapcautAYpbFst1ve4kA=
-  file: build/release.zip
-  skip_cleanup: true
-  on:
-    repo: blhylton/infores-store-locator-plugin
-    tags: true
-    php: 7.2
+script: ./vendor/bin/phpunit --configuration ./phpunit.xml
