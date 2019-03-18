@@ -27,8 +27,8 @@ before_deploy:
   - rm composer*
   - cd ..
   - sudo zip -r "release.zip" ./${REPO}
-  - mkdir ${REPO}/build
-  - mv release.zip ${REPO}/build/release.zip
+  - sudo mkdir ${REPO}/build
+  - sudo mv release.zip ${REPO}/build/release.zip
 deploy:
   provider: releases
   api_key:
