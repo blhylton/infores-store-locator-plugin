@@ -31,9 +31,9 @@ before_deploy:
   - composer install --no-dev
   - rm composer*
   - cd ..
-  - sudo zip -r "${REPO}-${TRAVIS_BUILD_NUMBER}.zip" ./${REPO}
+  - sudo zip -r "release.zip" ./${REPO}
   - mkdir ${REPO}/build
-  - mv *.zip ${REPO}/build/.
+  - mv release.zip ${REPO}/build/release.zip
 deploy:
   provider: releases
   api_key:
