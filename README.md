@@ -7,6 +7,8 @@ apparent API and a short time frame, it made sense to just scrape the page utili
 directly from the HTML tables. Since the site in question is a WordPress site, it made the most sense to implement it as
 a WordPress plugin.
 
+**Be aware that this plugin uses site scraping to return the data and as such should be treated as volatile.** I will do my best to keep it up to date should the interface change, and it doesn't appear to change often. That said, this appears to be the only real solution available for companies that only use InfoRes for their store/product location.
+
 ## Installation
 
 There are technically two different types of installation: Installing the plugin in WordPress, and installing the plugin
